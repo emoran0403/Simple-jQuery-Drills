@@ -51,47 +51,85 @@ $(document).ready(function () {
         9: When the user types in the input field and clicks submit, append the text in an h2 element to the div
         */
 
-        myH2.textContent = boxValue; //  sets the text content of h2 to be the value of the input box
+        //myH2.textContent = boxValue; //  sets the text content of h2 to be the value of the input box
+        let myLi = document.createElement("li");  // creates a list item
+        myLi.textContent = boxValue; // sets the text content of the list item to be the value of the input box
+        myLi.debounceId = 0;
+
+        myLi.addEventListener("click", function (event) {
+            // If a setTimeout ID exists for the element
+            if (myLi.debounceId) {
+                // then cancel it and reset it to zero
+                window.clearTimeout(myLi.debounceId);
+                myLi.debounceId = 0;
+            }
+
+
+            // If a single click fires (aka event.detail is 1)
+            if (event.detail === 1) {
+                // then create a new setTimeout with single click functionality
+                // and save the new setTimeout ID to the element.debounceID property
+                myLi.debounceId = setTimeout(function () {
+                    console.log("single clicked! yes!");
+                    //$(this).css("background-color", "red"); // put this here: randomColor()
+                    $(this).css("background-color", "yellow");
+                }, 500);
+                // Else if it's a double click, do double click actions
+            } else if (event.detail === 2) {
+                $(this).remove();
+            }
+        });
+        myUl.appendChild(myLi);
+        });
+
+        /*
+        8: Create a div element and append it to the body.
+        */
+
+        let pageDiv = document.createElement("div");  // creates a div element
+        //pageDiv.innerHTML ="my div shows up";
+        document.body.appendChild(pageDiv); // appends the div from above to the document body
+
+
+
+        /*
+        11, 12: comment out the code for creating the h2 use a list instead
+        Use jQuery to create an unordered list and append it to the body
+        */
+
+        // let myH2 = document.createElement("h2");  // creates the h2
+        // pageDiv.appendChild(myH2); // appends the h2 to the div
+
+        let myUl = document.createElement("ul");  // creates the unordered list
+        pageDiv.appendChild(myUl); // appends the unordered list to the div
+
+        /*
+        10: When the user mouses over the h2 element, assign it a new background color and border radius
+        */
+
+        function randomColor() { //this function will return a random rgb color r, g, b
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function randomBorderRadius() { // this function will return random border radii from 1-100 inclusive for each corner
+            let tl = Math.floor(Math.random() * 101);
+            let tr = Math.floor(Math.random() * 101);
+            let bl = Math.floor(Math.random() * 101);
+            let br = Math.floor(Math.random() * 101);
+            return `${tl}px ${tr}px ${bl}px ${br}px`;
+
+        }
+
+        myUl.onmouseover = function () { // this changes the background color and border radius of the h2 element on mouse over
+            $("h2").css("background-color", randomColor()); // calls the randomColor function
+            $("h2").css("border-radius", randomBorderRadius()); // calls the randomBorderRadius function
+        };
+
+       
+
+
     });
-
-    /*
-    8: Create a div element and append it to the body.
-    */
-
-    let pageDiv = document.createElement("div");  // creates a div element
-    //pageDiv.innerHTML ="my div shows up";
-    document.body.appendChild(pageDiv); // appends the div from above to the document body
-
-    let myH2 = document.createElement("h2");  // creates the h2
-    pageDiv.appendChild(myH2); // appends the h2 to the div
-
-
-
-    /*
-    10: When the user mouses over the h2 element, assign it a new background color and border radius
-    */
-
-    function randomColor() { //this function will return a random rgb color r, g, b
-        let r = Math.floor(Math.random() * 256);
-        let g = Math.floor(Math.random() * 256);
-        let b = Math.floor(Math.random() * 256);
-    
-        return `rgb(${r}, ${g}, ${b})`;
-    }
-
-    function randomBorderRadius() { // this function will return random border radii from 1-100 inclusive for each corner
-        let tl = Math.floor(Math.random() * 101);
-        let tr = Math.floor(Math.random() * 101);
-        let bl = Math.floor(Math.random() * 101);
-        let br = Math.floor(Math.random() * 101);
-        return `${tl}px ${tr}px ${bl}px ${br}px`;
-
-    }
-
-    myH2.onmouseover = function(){ // this changes the background color and border radius of the h2 element on mouse over
-        $("h2").css("background-color", randomColor()); // calls the randomColor function
-        $("h2").css("border-radius", randomBorderRadius()); // calls the randomBorderRadius function
-    };
-
-
-});
