@@ -57,26 +57,21 @@ $(document).ready(function () {
         myLi.debounceId = 0;
 
         myLi.addEventListener("click", function (event) {
-            // If a setTimeout ID exists for the element
-            if (myLi.debounceId) {
-                // then cancel it and reset it to zero
+            if (myLi.debounceId) { // these lines allow us to get around treating the second click of a double click as a second single click
                 window.clearTimeout(myLi.debounceId);
                 myLi.debounceId = 0;
             }
 
 
-            // If a single click fires (aka event.detail is 1)
-            if (event.detail === 1) {
-                // then create a new setTimeout with single click functionality
-                // and save the new setTimeout ID to the element.debounceID property
-                myLi.debounceId = setTimeout(function () {
-                    console.log("single clicked! yes!");
-                    //$(this).css("background-color", "red"); // put this here: randomColor()
-                    $(this).css("background-color", "yellow");
+            if (event.detail === 1) { // on single click, do this
+                myLi.debounceId = setTimeout(function () { // waits 500ms to decide if single or double click
+                    console.log("single clicked! yes!"); // logs if single click fired
+                    //$(this).css("background-color", "yellow"); // sets background color
+                    myLi.style.backgroundColor = randomColor();
+
                 }, 500);
-                // Else if it's a double click, do double click actions
-            } else if (event.detail === 2) {
-                $(this).remove();
+            } else if (event.detail === 2) { // on double click, do this
+                $(this).remove(); // removes the list item
             }
         });
         myUl.appendChild(myLi);
