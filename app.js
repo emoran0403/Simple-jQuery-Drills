@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     /*
     7: If the user has typed in the input field then the button should be enabled, otherwise the button should be disabled.
-    >> this was annoying, i kept using the wrong input IDs
+    >> this was annoying, i kept using the wrong input IDs :(
     */
        // Below will work, but it requires the user to click off the text box before enabling the button
 
@@ -34,6 +34,8 @@ $(document).ready(function () {
     }
 
     $("#inputBox").on('keyup', enableBtn); // attaches an event handler to the input box that fires after a key is released and triggers the enableBtn function
+    // keys which do not give input, such as caps lock or the arrow keys, will 'trick' this into firing despite there being no input in the box
+    // fix this later - use an alert to read the value? if not null is good, null is not bad
 
     $('#btnSubmit').click(function (event) {
         event.preventDefault(); // This prevents the Submit button from refreshing the page!
