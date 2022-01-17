@@ -20,14 +20,14 @@ $(document).ready(function () {
     7: If the user has typed in the input field then the button should be enabled, otherwise the button should be disabled.
     >> this was annoying, i kept using the wrong input IDs :(
     */
-       // Below will work, but it requires the user to click off the text box before enabling the button
+    // Below will work, but it requires the user to click off the text box before enabling the button
 
-       /*
-        $("#inputBox").change(function(){
-            $("#btnSubmit").removeAttr("disabled");
-            console.log('textbox has been changed');
-        });
-        */
+    /*
+     $("#inputBox").change(function(){
+         $("#btnSubmit").removeAttr("disabled");
+         console.log('textbox has been changed');
+     });
+     */
 
     function enableBtn() { //  This function will remove the 'disabled' attribute from the submit button
         $("#btnSubmit").removeAttr("disabled");
@@ -47,15 +47,51 @@ $(document).ready(function () {
         alert(`Submitted! You entered: ${boxValue}`); // This alerts the value from the text box
         console.log(boxValue); //for debugging
 
+        /*
+        9: When the user types in the input field and clicks submit, append the text in an h2 element to the div
+        */
 
-
+        myH2.textContent = boxValue; //  sets the text content of h2 to be the value of the input box
     });
 
+    /*
+    8: Create a div element and append it to the body.
+    */
+
+    let pageDiv = document.createElement("div");  // creates a div element
+    //pageDiv.innerHTML ="my div shows up";
+    document.body.appendChild(pageDiv); // appends the div from above to the document body
+
+    let myH2 = document.createElement("h2");  // creates the h2
+    pageDiv.appendChild(myH2); // appends the h2 to the div
 
 
 
+    /*
+    10: When the user mouses over the h2 element, assign it a new background color and border radius
+    */
 
+    function randomColor() { //this function will return a random rgb color r, g, b
+        let r = Math.floor(Math.random() * 256);
+        let g = Math.floor(Math.random() * 256);
+        let b = Math.floor(Math.random() * 256);
+    
+        return `rgb(${r}, ${g}, ${b})`;
+    }
 
+    function randomBorderRadius() { // this function will return random border radii from 1-100 inclusive for each corner
+        let tl = Math.floor(Math.random() * 101);
+        let tr = Math.floor(Math.random() * 101);
+        let bl = Math.floor(Math.random() * 101);
+        let br = Math.floor(Math.random() * 101);
+        return `${tl}px ${tr}px ${bl}px ${br}px`;
+
+    }
+
+    myH2.onmouseover = function(){ // this changes the background color and border radius of the h2 element on mouse over
+        $("h2").css("background-color", randomColor()); // calls the randomColor function
+        $("h2").css("border-radius", randomBorderRadius()); // calls the randomBorderRadius function
+    };
 
 
 });
